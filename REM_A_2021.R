@@ -15,32 +15,32 @@ library(xlsx)
 #___________________Estas variables sirven a todas las BBDD del Script
 
 fecha_mes <- "2021-11-01"
-archivo <- "BBDD Produccion/REM/Serie A/2021/2021-11 REM serie A.xlsx"
-
+ruta_base <- "C:/Users/control.gestion3/OneDrive/"
+archivo <- paste0(ruta_base,"BBDD Produccion/REM/Serie A/2021/2021-11 REM serie A.xlsx")
 
 # Representan las BBDD donde esta guardada la información -----------------
-A07BBDD <- "BBDD Produccion/Ambulatorio/A07 BBDD.xlsx"
-A07CNBBDD <- "BBDD Produccion/Ambulatorio/A07 BBDD CN.xlsx"
-A30BBDD <- "BBDD Produccion/Ambulatorio/A30 BBDD.xlsx"
-A28BBDD <- "BBDD Produccion/Ambulatorio/A28 BBDD.xlsx"
-A08BBDD01 <- "BBDD Produccion/Urgencia/A08 BBDD_01.xlsx"
-A08BBDD02 <- "BBDD Produccion/Urgencia/A08 BBDD_02.xlsx"
-A08BBDD03 <- "BBDD Produccion/Urgencia/A08 BBDD_03.xlsx"
-A08BBDD04 <- "BBDD Produccion/Urgencia/A08 BBDD_04.xlsx"
-A08BBDD05 <- "BBDD Produccion/Urgencia/A08 BBDD_05.xlsx"
-A08BBDD06 <- "BBDD Produccion/Urgencia/A08 BBDD_06.xlsx"
-A09BBDD01 <- "BBDD Produccion/Ambulatorio/A09 BBDD_01.xlsx"
-A09BBDD02 <- "BBDD Produccion/Ambulatorio/A09 BBDD_02.xlsx"
-A09BBDD03 <- "BBDD Produccion/Ambulatorio/A09 BBDD_03.xlsx"
-A06BBDD <- "BBDD Produccion/Ambulatorio/A06 BBDD.xlsx"
-A19bBBDD <- "BBDD Produccion/OIRS/A19b BBDD.xlsx"
-A211BBDD <- "BBDD Produccion/Quirurgico/A21_1 BBDD.xlsx"
-A212BBDD <- "BBDD Produccion/Quirurgico/A21_2 BBDD.xlsx"
-A213BBDD <- "BBDD Produccion/Quirurgico/A21_3 BBDD.xlsx"
-A214BBDD <- "BBDD Produccion/Quirurgico/A21_4 BBDD.xlsx"
-A041BBDD <- "BBDD Produccion/ADyT/A04_1 BBDD.xlsx"
-A043BBDD <- "BBDD Produccion/ADyT/A04_3 BBDD.xlsx"
-B_IMGBBDD <- "BBDD Produccion/ADyT/B_IMG BBDD.xlsx"
+A07BBDD <- paste0(ruta_base,"BBDD Produccion/Ambulatorio/A07 BBDD.xlsx")
+A07CNBBDD <- paste0(ruta_base,"BBDD Produccion/Ambulatorio/A07 BBDD CN.xlsx")
+A30BBDD <- paste0(ruta_base,"BBDD Produccion/Ambulatorio/A30 BBDD.xlsx")
+A28BBDD <- paste0(ruta_base,"BBDD Produccion/Ambulatorio/A28 BBDD.xlsx")
+A08BBDD01 <- paste0(ruta_base,"BBDD Produccion/Urgencia/A08 BBDD_01.xlsx")
+A08BBDD02 <- paste0(ruta_base,"BBDD Produccion/Urgencia/A08 BBDD_02.xlsx")
+A08BBDD03 <- paste0(ruta_base,"BBDD Produccion/Urgencia/A08 BBDD_03.xlsx")
+A08BBDD04 <- paste0(ruta_base,"BBDD Produccion/Urgencia/A08 BBDD_04.xlsx")
+A08BBDD05 <- paste0(ruta_base,"BBDD Produccion/Urgencia/A08 BBDD_05.xlsx")
+A08BBDD06 <- paste0(ruta_base,"BBDD Produccion/Urgencia/A08 BBDD_06.xlsx")
+A09BBDD01 <- paste0(ruta_base,"BBDD Produccion/Ambulatorio/A09 BBDD_01.xlsx")
+A09BBDD02 <- paste0(ruta_base,"BBDD Produccion/Ambulatorio/A09 BBDD_02.xlsx")
+A09BBDD03 <- paste0(ruta_base,"BBDD Produccion/Ambulatorio/A09 BBDD_03.xlsx")
+A06BBDD <- paste0(ruta_base,"BBDD Produccion/Ambulatorio/A06 BBDD.xlsx")
+A19bBBDD <- paste0(ruta_base,"BBDD Produccion/OIRS/A19b BBDD.xlsx")
+A211BBDD <- paste0(ruta_base,"BBDD Produccion/Quirurgico/A21_1 BBDD.xlsx")
+A212BBDD <- paste0(ruta_base,"BBDD Produccion/Quirurgico/A21_2 BBDD.xlsx")
+A213BBDD <- paste0(ruta_base,"BBDD Produccion/Quirurgico/A21_3 BBDD.xlsx")
+A214BBDD <- paste0(ruta_base,"BBDD Produccion/Quirurgico/A21_4 BBDD.xlsx")
+A041BBDD <- paste0(ruta_base,"BBDD Produccion/ADyT/A04_1 BBDD.xlsx")
+A043BBDD <- paste0(ruta_base,"BBDD Produccion/ADyT/A04_3 BBDD.xlsx")
+B_IMGBBDD <- paste0(ruta_base,"BBDD Produccion/ADyT/B_IMG BBDD.xlsx")
 
 
 # A07 ---------------------------------------------------------------------
