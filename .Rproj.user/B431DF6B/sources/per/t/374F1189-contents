@@ -2,13 +2,13 @@ library(readxl)
 library(tidyverse)
 library(dplyr)
 
-fecha_mes <- "2021-12-01"
+fecha_mes <- "2021-10-01"
 
 censoHM <- read_excel("C:/Users/control.gestion3/OneDrive/BBDD Produccion/REM/CENSO/2021/Censo-hrrio 2021.xlsx",
-                      col_names = FALSE, range = "DIC!B7:P21") # Ojo que no todos los meses tiene el mismo rango
+                      col_names = FALSE, range = "OCT!B7:P21") # Ojo que no todos los meses tiene el mismo rango
 
 censoFM <- read_excel("C:/Users/control.gestion3/OneDrive/BBDD Produccion/REM/CENSO/2021/Censo ssmn 2021.xlsx",
-                      col_names = FALSE, range = "DIC-UF!B7:I20")
+                      col_names = FALSE, range = "OCT-UF!B7:I20")
 
 # CENSO HRRIO -------------------------------------------------------------------
 colnames(censoHM)[1] <- "Información estadistica"
