@@ -13,18 +13,18 @@ library(xlsx)
 #___________________Cada mes debo cambiar las variables #fecha_mes y archivo
 #___________________Estas variables sirven a todas las BBDD del Script
 
-fecha_mes <- "2021-11-01"
-archivoBS <- "BBDD Produccion/REM/Serie BS/2021/2021-11 REM serie BS.xlsx"
+fecha_mes <- "2021-12-01"
+archivoBS <- "C:/Users/control.gestion3/OneDrive/BBDD Produccion/REM/Serie BS/2021/2021-12 REM serie BS.xlsx"
 
 # Representan las BBDD donde esta guardada la información -----------------
 
-B_IMGBBDD <- "BBDD Produccion/ADyT/B_IMG BBDD.xlsx"
-B_LABBBDD <- "BBDD Produccion/ADyT/B_LAB BBDD.xlsx"
-B_APBBDD <- "BBDD Produccion/ADyT/B_AP BBDD.xlsx"
-B_UMTBBDD <- "BBDD Produccion/ADyT/B_UMT BBDD.xlsx"
-B_QfBBDD <- "BBDD Produccion/Quirurgico/B_Qf BBDD.xlsx"
-B171_QfBBDD <- "BBDD Produccion/Quirurgico/B171_Qf BBDD.xlsx"
-B172_QfBBDD <- "BBDD Produccion/Quirurgico/B172_Qf BBDD.xlsx"
+B_IMGBBDD <- "C:/Users/control.gestion3/OneDrive/BBDD Produccion/ADyT/B_IMG BBDD.xlsx"
+B_LABBBDD <- "C:/Users/control.gestion3/OneDrive/BBDD Produccion/ADyT/B_LAB BBDD.xlsx"
+B_APBBDD <- "C:/Users/control.gestion3/OneDrive/BBDD Produccion/ADyT/B_AP BBDD.xlsx"
+B_UMTBBDD <- "C:/Users/control.gestion3/OneDrive/BBDD Produccion/ADyT/B_UMT BBDD.xlsx"
+B_QfBBDD <- "C:/Users/control.gestion3/OneDrive/BBDD Produccion/Quirurgico/B_Qf BBDD.xlsx"
+B171_QfBBDD <- "C:/Users/control.gestion3/OneDrive/BBDD Produccion/Quirurgico/B171_Qf BBDD.xlsx"
+B172_QfBBDD <- "C:/Users/control.gestion3/OneDrive/BBDD Produccion/Quirurgico/B172_Qf BBDD.xlsx"
 
 # Imagenología ------------------------------------------------------
 

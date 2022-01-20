@@ -2,13 +2,13 @@ library(readxl)
 library(tidyverse)
 library(dplyr)
 
-fecha_mes <- "2021-09-01"
+fecha_mes <- "2021-12-01"
 
-censoHM <- read_excel("BBDD Produccion/REM/CENSO/2021/Censo-hrrio 2021.xlsx",
-                      col_names = FALSE, range = "SEP!B10:P24") # Ojo que no todos los meses tiene el mismo rango
+censoHM <- read_excel("C:/Users/control.gestion3/OneDrive/BBDD Produccion/REM/CENSO/2021/Censo-hrrio 2021.xlsx",
+                      col_names = FALSE, range = "DIC!B7:P21") # Ojo que no todos los meses tiene el mismo rango
 
-censoFM <- read_excel("BBDD Produccion/REM/CENSO/2021/Censo ssmn 2021.xlsx",
-                      col_names = FALSE, range = "SEP-UF!B7:I20")
+censoFM <- read_excel("C:/Users/control.gestion3/OneDrive/BBDD Produccion/REM/CENSO/2021/Censo ssmn 2021.xlsx",
+                      col_names = FALSE, range = "DIC-UF!B7:I20")
 
 # CENSO HRRIO -------------------------------------------------------------------
 colnames(censoHM)[1] <- "Información estadistica"
@@ -27,6 +27,7 @@ colnames(censoHM)[13] <- "UNIDAD DE CUIDADO INTERMEDIO CARDIOVASCULAR"
 colnames(censoHM)[14] <- "SALUD MENTAL CORTA ESTADÍA" 
 colnames(censoHM)[15] <- "SALUD MENTAL MEDIANA ESTADÍA"
 censoHM$`SALUD MENTAL MEDIANA ESTADÍA` <- as.double(censoHM$`SALUD MENTAL MEDIANA ESTADÍA`)
+censoHM$`UNIDAD PEDIATRICA UPGD` <- as.double(censoHM$`UNIDAD PEDIATRICA UPGD`)
 censoHM <- censoHM %>% pivot_longer(- `Información estadistica`,
                                     names_to = "Unidad", 
                                     values_to = "Total")
@@ -36,9 +37,9 @@ censoHM <- censoHM %>% select(Fecha, Unidad,`Información estadistica`, Total)
 censoHM$Fecha=as.Date(censoHM$Fecha)
 
 
-Censo_hrrio_BBDD <- read_excel("BBDD Produccion/REM/CENSO/Censo-hrrio_BBDD.xlsx")
+Censo_hrrio_BBDD <- read_excel("C:/Users/control.gestion3/OneDrive/BBDD Produccion/REM/CENSO/Censo-hrrio_BBDD.xlsx")
 Censo_hrrio_BBDD <- rbind(censoHM, Censo_hrrio_BBDD)
-openxlsx::write.xlsx(Censo_hrrio_BBDD, "BBDD Produccion/REM/CENSO/Censo-hrrio_BBDD.xlsx", colNames = TRUE, sheetName = "Censo", overwrite = T)
+openxlsx::write.xlsx(Censo_hrrio_BBDD, "C:/Users/control.gestion3/OneDrive/BBDD Produccion/REM/CENSO/Censo-hrrio_BBDD.xlsx", colNames = TRUE, sheetName = "Censo", overwrite = T)
 
 
 # CENSO UNIDADES FUNCIONALES ----------------------------------------------
@@ -57,9 +58,9 @@ censoFM$Fecha <- fecha_mes
 censoFM <- censoFM %>% select(Fecha, `UNIDAD FUNCIONAL`,`Información estadistica`, Total) 
 censoFM$Fecha=as.Date(censoFM$Fecha)
 
-Censo_FUNCIONAL_BBDD <- read_excel("BBDD Produccion/REM/CENSO/Censo-FUNCIONAL_BBDD.xlsx")
+Censo_FUNCIONAL_BBDD <- read_excel("C:/Users/control.gestion3/OneDrive/BBDD Produccion/REM/CENSO/Censo-FUNCIONAL_BBDD.xlsx")
 Censo_FUNCIONAL_BBDD <- rbind(censoFM, Censo_FUNCIONAL_BBDD)
-openxlsx::write.xlsx(Censo_FUNCIONAL_BBDD, "BBDD Produccion/REM/CENSO/Censo-FUNCIONAL_BBDD.xlsx", 
+openxlsx::write.xlsx(Censo_FUNCIONAL_BBDD, "C:/Users/control.gestion3/OneDrive/BBDD Produccion/REM/CENSO/Censo-FUNCIONAL_BBDD.xlsx", 
                      colNames = TRUE, sheetName = "Censo", overwrite = T)
 
 rm(censoFM, censoHM, fecha_mes, Censo_FUNCIONAL_BBDD, Censo_hrrio_BBDD)

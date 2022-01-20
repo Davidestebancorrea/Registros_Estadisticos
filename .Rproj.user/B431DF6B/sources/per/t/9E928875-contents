@@ -14,9 +14,9 @@ library(xlsx)
 #___________________Cada mes debo cambiar las variables #fecha_mes y archivo
 #___________________Estas variables sirven a todas las BBDD del Script
 
-fecha_mes <- "2021-11-01"
+fecha_mes <- "2021-12-01"
 ruta_base <- "C:/Users/control.gestion3/OneDrive/"
-archivo <- paste0(ruta_base,"BBDD Produccion/REM/Serie A/2021/2021-11 REM serie A.xlsx")
+archivo <- paste0(ruta_base,"BBDD Produccion/REM/Serie A/2021/2021-12 REM serie A.xlsx")
 
 # Representan las BBDD donde esta guardada la información -----------------
 A07BBDD <- paste0(ruta_base,"BBDD Produccion/Ambulatorio/A07 BBDD.xlsx")
