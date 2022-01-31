@@ -14,9 +14,13 @@ library(xlsx)
 #___________________Cada mes debo cambiar las variables #fecha_mes y archivo
 #___________________Estas variables sirven a todas las BBDD del Script
 
-fecha_mes <- "2021-12-01"
+meses <- c("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11","12")
+for (i in meses) {
+  
+ 
+fecha_mes <- paste0("2021-",i,"-01")
 ruta_base <- "C:/Users/control.gestion3/OneDrive/"
-archivo <- paste0(ruta_base,"BBDD Produccion/REM/Serie A/2021/2021-12 REM serie A.xlsx")
+archivo <- paste0(ruta_base,"BBDD Produccion/REM/Serie A/2021/2021-",i," REM serie A.xlsx")
 
 # Representan las BBDD donde esta guardada la información -----------------
 A07BBDD <- paste0(ruta_base,"BBDD Produccion/Ambulatorio/A07 BBDD.xlsx")
@@ -587,7 +591,7 @@ A213 <- read_excel(A213BBDD)
 A214 <- read_excel(A214BBDD) 
 A041 <- read_excel(A041BBDD)
 A043 <- read_excel(A043BBDD)
-B_Img <- read_excel(B_IMGBBDD)
+# B_Img <- read_excel(B_IMGBBDD)
 
 # junta la informacion con el REM mensual   -------------------------------
 A07 <- rbind(A07, A07M)
@@ -611,7 +615,7 @@ A213 <- rbind(A213, A213M)
 A214 <- rbind(A214, A214M)
 A041 <- rbind(A041, A041M)
 A043 <- rbind(A043, A043M)
-B_Img <- rbind(B_Img, B_ImgM)
+# B_Img <- rbind(B_Img, B_ImgM)
 
 # da formato fecha a la variable fecha ------------------------------------
 A07$Fecha=as.Date(A07$Fecha)
@@ -635,7 +639,7 @@ A213$Fecha=as.Date(A213$Fecha)
 A214$Fecha=as.Date(A214$Fecha)
 A041$Fecha=as.Date(A041$Fecha)
 A043$Fecha=as.Date(A043$Fecha)
-B_Img$Fecha=as.Date(B_Img$Fecha)
+# B_Img$Fecha=as.Date(B_Img$Fecha)
 
 # Graba las BBDD en el archivo excel --------------------------------------
 openxlsx::write.xlsx(A07, A07BBDD, colNames = TRUE, sheetName = "A07", overwrite = T)
@@ -659,6 +663,6 @@ openxlsx::write.xlsx(A213, A213BBDD, colNames = TRUE, sheetName = "A21_3", overw
 openxlsx::write.xlsx(A214, A214BBDD, colNames = TRUE, sheetName = "A21_4", overwrite = T)
 openxlsx::write.xlsx(A041, A041BBDD, colNames = TRUE, sheetName = "A04_1", overwrite = T)
 openxlsx::write.xlsx(A043, A043BBDD, colNames = TRUE, sheetName = "A04_3", overwrite = T)
-openxlsx::write.xlsx(B_Img, B_IMGBBDD, colNames = TRUE, sheetName = "B_Img", overwrite = T)
-
+# openxlsx::write.xlsx(B_Img, B_IMGBBDD, colNames = TRUE, sheetName = "B_Img", overwrite = T)
+}
 

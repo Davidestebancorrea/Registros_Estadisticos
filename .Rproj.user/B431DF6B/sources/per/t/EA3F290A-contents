@@ -13,8 +13,11 @@ library(xlsx)
 #___________________Cada mes debo cambiar las variables #fecha_mes y archivo
 #___________________Estas variables sirven a todas las BBDD del Script
 
-fecha_mes <- "2021-12-01"
-archivoBS <- "C:/Users/control.gestion3/OneDrive/BBDD Produccion/REM/Serie BS/2021/2021-12 REM serie BS.xlsx"
+meses <- c("06", "07", "08", "09", "10", "11","12")
+for (i in meses) {
+
+fecha_mes <- paste0("2021-",i,"-01")  
+archivoBS <- paste0("C:/Users/control.gestion3/OneDrive/BBDD Produccion/REM/Serie BS/2021/2021-",i," REM serie BS.xlsx")
 
 # Representan las BBDD donde esta guardada la información -----------------
 
@@ -329,3 +332,4 @@ openxlsx::write.xlsx(B_UMT, B_UMTBBDD, colNames = TRUE, sheetName = "B_UMT", ove
 openxlsx::write.xlsx(B_Qf, B_QfBBDD, colNames = TRUE, sheetName = "B_Qf", overwrite = T)
 openxlsx::write.xlsx(B171_Qf, B171_QfBBDD, colNames = TRUE, sheetName = "B171_Qf", overwrite = T)
 openxlsx::write.xlsx(B172_Qf, B172_QfBBDD, colNames = TRUE, sheetName = "B172_Qf", overwrite = T)
+}

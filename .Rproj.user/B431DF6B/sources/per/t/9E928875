@@ -3,7 +3,7 @@
     "path": "~/GitHub/Registros_Estadisticos/REM_A_2021.R",
     "project_path": "REM_A_2021.R",
     "type": "r_source",
-    "hash": "1764707525",
+    "hash": "1802527820",
     "contents": "",
     "dirty": false,
     "created": 1641470285358.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "664,0",
-        "scrollLine": "0"
+        "cursorPosition": "11,0",
+        "scrollLine": "20"
     },
     "folds": "",
-    "lastKnownWriteTime": 1642697352,
+    "lastKnownWriteTime": 1643654467,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1642697352716,
+    "last_content_update": 1643654468009,
     "read_only": false,
     "read_only_alternatives": []
 }
