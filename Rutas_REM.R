@@ -141,7 +141,12 @@ for (i in meses) {
   
   #C.4.3.1
   
-  C431N <- read_excel(archivo, sheet = "A08", range = "C92", col_names = FALSE)
+  C431N <- 
+    read_excel(archivo, sheet = "A07", range = "W71", col_names = FALSE) + 
+    read_excel(archivo, sheet = "A07", range = "AA71", col_names = FALSE) +
+    read_excel(archivo, sheet = "A32", range = "Z45", col_names = FALSE) +
+    read_excel(archivo, sheet = "A32", range = "AE45", col_names = FALSE)
+  
   
   colnames(C431N)[1] <- fecha_mes
   if (i == "01"){
@@ -151,10 +156,8 @@ for (i in meses) {
     C431N2 <- cbind(C431N2,C431N)}
   
   C431D <- 
-    read_excel(archivo, sheet = "A07", range = "W71", col_names = FALSE) + 
-    read_excel(archivo, sheet = "A07", range = "AA71", col_names = FALSE) +
-    read_excel(archivo, sheet = "A32", range = "Z45", col_names = FALSE) +
-    read_excel(archivo, sheet = "A32", range = "AE45", col_names = FALSE)
+    read_excel(archivo, sheet = "A07", range = "B71", col_names = FALSE) + 
+    read_excel(archivo, sheet = "A32", range = "B45", col_names = FALSE) 
   
   colnames(C431D)[1] <- fecha_mes
   if (i == "01"){
@@ -178,41 +181,6 @@ for (i in meses) {
   else{
     C434N2 <- cbind(C434N2,C434N)}
   
-  # C431D <- 
-  #   read_excel(archivo, sheet = "A07", range = "AL71", col_names = FALSE) + 
-  #   read_excel(archivo, sheet = "A07", range = "AM71", col_names = FALSE) +
-  #   read_excel(archivo, sheet = "A32", range = "X45", col_names = FALSE) +
-  #   read_excel(archivo, sheet = "A32", range = "YE45", col_names = FALSE)
-  # 
-  # colnames(C434D)[1] <- fecha_mes
-  # if (i == "01"){
-  #   C434D2 <- C434D
-  # }
-  # else{
-  #   C434D2 <- cbind(C434D2,C434D)}
-  # 
-  # C434N_2 <- read_excel(archivo, sheet = "A08", range = "C92", col_names = FALSE)
-  # 
-  # colnames(C434N_2)[1] <- fecha_mes
-  # if (i == "01"){
-  #   C434N2_2 <- C434N_2
-  # }
-  # else{
-  #   C434N2_2 <- cbind(C434N2_2,C434N_2)}
-  # 
-  # C431D_2 <- 
-  #   read_excel(archivo, sheet = "A07", range = "W71", col_names = FALSE) + 
-  #   read_excel(archivo, sheet = "A07", range = "AA71", col_names = FALSE) +
-  #   read_excel(archivo, sheet = "A32", range = "Z45", col_names = FALSE) +
-  #   read_excel(archivo, sheet = "A08", range = "AE45", col_names = FALSE)
-  # 
-  # colnames(C434D_2)[1] <- fecha_mes
-  # if (i == "01"){
-  #   C434D2_2 <- C434D_2
-  # }
-  # else{
-  #   C434D2_2 <- cbind(C434D2_2,C434D_2)}
-  
 # D412 ------------------------------------------------------
   A04N <- read_excel(archivo, sheet = "A04", range = "E106", col_names = FALSE)+ 
     read_excel(archivo, sheet = "A04", range = "J106", col_names = FALSE)
@@ -234,9 +202,6 @@ for (i in meses) {
   }
   else{
     Denominador <- cbind(Denominador,A04D)}
-  
-
-
   
 }
 
@@ -295,14 +260,10 @@ rutas_rem_ear2 <- rutas_rem_ear %>% select(indicador, nombre, variable)
 rutas_rem_ear <-  round(rutas_rem_ear %>% select(-indicador, -nombre, -variable))
 rutas_rem_ear <- cbind(rutas_rem_ear2, rutas_rem_ear)
 
-# openxlsx::write.xlsx(A04, "C:/Users/control.gestion3/OneDrive/BBDD Produccion/Indicadores/Rutas REM/A04.xlsx", colNames = TRUE, sheetName = "A04", overwrite = TRUE)
-
 openxlsx::write.xlsx(rutas_rem_ear, "C:/Users/control.gestion3/OneDrive/BBDD Produccion/Indicadores/Rutas REM/rutas_rem_ear.xlsx", colNames = TRUE, sheetName = "rutas", overwrite = TRUE)
 
-# openxlsx::write.xlsx(A08, "C:/Users/control.gestion3/OneDrive/BBDD Produccion/Indicadores/Rutas REM/A08.xlsx", colNames = TRUE, sheetName = "A08", overwrite = TRUE)
-
 rm(A04D, A04N, Denominador, Numerador, rutas_rem_ear, rutas_rem_ear2,
-   i, archivo, fecha_mes, meses, ruta_base, D412
+   i, archivo, fecha_mes, meses, ruta_base, D412,
    A411, A411N, A411N2, 
    A412, A412N, A412N2,
    C434, C434N, C434N2,
