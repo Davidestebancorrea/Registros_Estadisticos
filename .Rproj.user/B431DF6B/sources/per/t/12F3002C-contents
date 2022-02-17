@@ -26,18 +26,9 @@ for (i in meses) {
 
 # EAR ---------------------------------------------------------------------
 
-#A.4_1.1
-  A411N <- read_excel(archivo, sheet = "A07", range = "B71", col_names = FALSE)
-  
-  colnames(A411N)[1] <- fecha_mes
-  if (i == "01"){
-    A411N2 <- A411N
-  }
-  else{
-    A411N2 <- cbind(A411N2,A411N)}
-  
- #A.4.1.2 
-  A412N <- 
+#A.4_1.3
+  A413N <- 
+    read_excel(archivo, sheet = "A07", range = "B71", col_names = FALSE) +
     read_excel(archivo, sheet = "A30", range = "J17", col_names = FALSE) +
     read_excel(archivo, sheet = "A30", range = "K17", col_names = FALSE) +
     read_excel(archivo, sheet = "A30", range = "L17", col_names = FALSE) +
@@ -48,12 +39,12 @@ for (i in meses) {
     read_excel(archivo, sheet = "A30", range = "T17", col_names = FALSE) +
     read_excel(archivo, sheet = "A32", range = "B45", col_names = FALSE)
   
-  colnames(A412N)[1] <- fecha_mes
+  colnames(A413N)[1] <- fecha_mes
   if (i == "01"){
-    A412N2 <- A412N
+    A413N2 <- A413N
   }
   else{
-    A412N2 <- cbind(A412N2,A412N)}
+    A413N2 <- cbind(A413N2,A413N)}
   
   #B.3.1.5
   
@@ -262,15 +253,11 @@ for (i in meses) {
 
 }
 
-A411 <- A411N2
-A411$indicador <- "A.4.1.1"
-A411$nombre <- "Porcentaje de cumplimiento de la programación anual de consultas médicas realizadas por especialista"
-A411$variable <- c("P1")
+A413 <- A413N2
+A413$indicador <- "A.4.1.3"
+A413$nombre <- "Porcentaje de cumplimiento de la programación anual de consultas médicas realizadas por especialista presencial, remota y por telemedicina"
+A413$variable <- c("P1")
 
-A412 <- A412N2
-A412$indicador <- "A.4.1.2"
-A412$nombre <- "Porcentaje de cumplimiento de la programación total de consultas médicas de especialidad realizadas por Telemedicina"
-A412$variable <- c("P1")
 
 B315 <- rbind(B315N2, B315D2)
 B315$indicador <- "B.3.1.5"
@@ -321,7 +308,7 @@ C435$nombre <- "Porcentaje de altas médicas de consulta de especialidad en aten
 C435$variable <- c("P1", "P2")
 
 
-rutas_rem_ear <- rbind(A411, A412, B315, B413, B414, B415, C431, C434, C435, D412, D417)
+rutas_rem_ear <- rbind(A413, B315, B413, B414, B415, C431, C434, C435, D412, D417)
 rutas_rem_ear2 <- rutas_rem_ear %>% select(indicador, nombre, variable)
 rutas_rem_ear <-  round(rutas_rem_ear %>% select(-indicador, -nombre, -variable))
 rutas_rem_ear <- cbind(rutas_rem_ear2, rutas_rem_ear)
