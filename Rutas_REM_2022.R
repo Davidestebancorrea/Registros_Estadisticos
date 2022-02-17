@@ -15,11 +15,12 @@ library(xlsx)
 #___________________Estas variables sirven a todas las BBDD del Script
 
 
-meses <- c("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11","12")
+meses <- c("01")
+# meses <- c("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11","12")
 for (i in meses) {
-  fecha_mes <- paste0("2021-",i,"-01")
+  fecha_mes <- paste0("2022-",i,"-01")
   ruta_base <- "C:/Users/control.gestion3/OneDrive/"
-  archivo <- paste0(ruta_base,"BBDD Produccion/REM/Serie A/2021/2021-",i," REM serie A.xlsx")
+  archivo <- paste0(ruta_base,"BBDD Produccion/REM/Serie A/2022/2022-",i," REM serie A.xlsx")
   
 
 
@@ -203,8 +204,63 @@ for (i in meses) {
   else{
     Denominador <- cbind(Denominador,A04D)}
   
-}
 
+# D417 ------------------------------------------------------
+  D417N <- 
+    read_excel(archivo, sheet = "A19b", range = "E11", col_names = FALSE) + 
+    read_excel(archivo, sheet = "A19b", range = "F11", col_names = FALSE) 
+  
+  
+  colnames(D417N)[1] <- fecha_mes
+  if (i == "01"){
+    D417N2 <- D417N
+  }
+  else{
+    D417N2 <- cbind(D417N2,D417N)}
+  
+  D417D <- 
+    read_excel(archivo, sheet = "A19b", range = "E11", col_names = FALSE) + 
+    read_excel(archivo, sheet = "A19b", range = "F11", col_names = FALSE) +
+    read_excel(archivo, sheet = "A19b", range = "G11", col_names = FALSE)
+  
+  colnames(D417D)[1] <- fecha_mes
+  if (i == "01"){
+    D417D2 <- D417D
+  }
+  else{
+    D417D2 <- cbind(D417D2,D417D)}
+  
+  # D435 ------------------------------------------------------
+  C435N <- 
+    read_excel(archivo, sheet = "A07", range = "AL71", col_names = FALSE) + 
+    read_excel(archivo, sheet = "A07", range = "AM71", col_names = FALSE) +
+    read_excel(archivo, sheet = "A32", range = "X45", col_names = FALSE) +
+    read_excel(archivo, sheet = "A32", range = "Y45", col_names = FALSE)
+  
+  
+  colnames(C435N)[1] <- fecha_mes
+  if (i == "01"){
+    C435N2 <- C435N
+  }
+  else{
+    C435N2 <- cbind(C435N2,C435N)}
+  
+  C435D <- 
+    read_excel(archivo, sheet = "A07", range = "B71", col_names = FALSE) + 
+    read_excel(archivo, sheet = "A32", range = "B45", col_names = FALSE) +
+    read_excel(archivo, sheet = "A30", range = "J17", col_names = FALSE) +
+    read_excel(archivo, sheet = "A30", range = "K17", col_names = FALSE) +
+    read_excel(archivo, sheet = "A30", range = "L17", col_names = FALSE) +
+    read_excel(archivo, sheet = "A30", range = "M17", col_names = FALSE) 
+  
+  colnames(C435D)[1] <- fecha_mes
+  if (i == "01"){
+    C435D2 <- C435D
+  }
+  else{
+    C435D2 <- cbind(C435D2,C435D)}
+
+}
 
 A411 <- A411N2
 A411$indicador <- "A.4.1.1"
@@ -254,21 +310,34 @@ D412$indicador <- "D.4.1.2"
 D412$nombre <- "Porcentaje de Despacho de Receta Total y Oportuno"
 D412$variable <- c("P1", "P2")
 
+D417 <- rbind(D417N2, D417D2)
+D417$indicador <- "D.4.1.7"
+D417$nombre <- "Oportunidad, Calidad y Gestión de la Respuesta a los Reclamos"
+D417$variable <- c("P1", "P2")
 
-rutas_rem_ear <- rbind(A411, A412, B315, B413, B414, B415, C431, C434, D412)
+C435 <- rbind(C435N2, C435D2)
+C435$indicador <- "C.4.3.5"
+C435$nombre <- "Porcentaje de altas médicas de consulta de especialidad en atención secundaria"
+C435$variable <- c("P1", "P2")
+
+
+rutas_rem_ear <- rbind(A411, A412, B315, B413, B414, B415, C431, C434, C435, D412, D417)
 rutas_rem_ear2 <- rutas_rem_ear %>% select(indicador, nombre, variable)
 rutas_rem_ear <-  round(rutas_rem_ear %>% select(-indicador, -nombre, -variable))
 rutas_rem_ear <- cbind(rutas_rem_ear2, rutas_rem_ear)
 
-openxlsx::write.xlsx(rutas_rem_ear, "C:/Users/control.gestion3/OneDrive/BBDD Produccion/Indicadores/Rutas REM/rutas_rem_ear_2022.xlsx", colNames = TRUE, sheetName = "rutas", overwrite = TRUE)
+openxlsx::write.xlsx(rutas_rem_ear, "C:/Users/control.gestion3/OneDrive/BBDD Produccion/Indicadores/Rutas REM/rutas_rem_ear_2022.xlsx", 
+                     colNames = TRUE, sheetName = "rutas", overwrite = TRUE)
 
 rm(A04D, A04N, Denominador, Numerador, rutas_rem_ear, rutas_rem_ear2,
    i, archivo, fecha_mes, meses, ruta_base, D412,
    A411, A411N, A411N2, 
    A412, A412N, A412N2,
    C434, C434N, C434N2,
-   B315, B315D, B315D2, B315N, B315N2, 
+   B315, B315D, B315D2, B315N, B315N2,  
    B413, B413D, B413D2, B413N, B413N2,
    B414, B414D, B414D2, B414N, B414N2,
    B415, B415D, B415D2, B415N, B415N2,
-   C431, C431D, C431D2, C431N, C431N2)
+   C431, C431D, C431D2, C431N, C431N2,
+   C435, C435D, C435D2, C435N, C435N2,
+   D417, D417D, D417D2, D417N, D417N2)
