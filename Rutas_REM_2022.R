@@ -260,7 +260,7 @@ rutas_rem_ear2 <- rutas_rem_ear %>% select(indicador, nombre, variable)
 rutas_rem_ear <-  round(rutas_rem_ear %>% select(-indicador, -nombre, -variable))
 rutas_rem_ear <- cbind(rutas_rem_ear2, rutas_rem_ear)
 
-openxlsx::write.xlsx(rutas_rem_ear, "C:/Users/control.gestion3/OneDrive/BBDD Produccion/Indicadores/Rutas REM/rutas_rem_ear.xlsx", colNames = TRUE, sheetName = "rutas", overwrite = TRUE)
+openxlsx::write.xlsx(rutas_rem_ear, "C:/Users/control.gestion3/OneDrive/BBDD Produccion/Indicadores/Rutas REM/rutas_rem_ear_2022.xlsx", colNames = TRUE, sheetName = "rutas", overwrite = TRUE)
 
 rm(A04D, A04N, Denominador, Numerador, rutas_rem_ear, rutas_rem_ear2,
    i, archivo, fecha_mes, meses, ruta_base, D412,

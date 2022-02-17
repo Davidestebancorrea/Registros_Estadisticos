@@ -14,13 +14,14 @@ library(xlsx)
 #___________________Cada mes debo cambiar las variables #fecha_mes y archivo
 #___________________Estas variables sirven a todas las BBDD del Script
 
-meses <- c("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11","12")
+meses <- c("01")
+# ("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11","12")
 for (i in meses) {
   
  
-fecha_mes <- paste0("2021-",i,"-01")
+fecha_mes <- paste0("2022-",i,"-01")
 ruta_base <- "C:/Users/control.gestion3/OneDrive/"
-archivo <- paste0(ruta_base,"BBDD Produccion/REM/Serie A/2021/2021-",i," REM serie A.xlsx")
+archivo <- paste0(ruta_base,"BBDD Produccion/REM/Serie A/2022/2022-",i," REM serie A.xlsx")
 
 # Representan las BBDD donde esta guardada la información -----------------
 A07BBDD <- paste0(ruta_base,"BBDD Produccion/Ambulatorio/A07 BBDD.xlsx")
