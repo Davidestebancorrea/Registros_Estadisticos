@@ -318,8 +318,7 @@ openxlsx::write.xlsx(rutas_rem_ear, "C:/Users/control.gestion3/OneDrive/BBDD Pro
 
 rm(A04D, A04N, Denominador, Numerador, rutas_rem_ear, rutas_rem_ear2,
    i, archivo, fecha_mes, meses, ruta_base, D412,
-   A411, A411N, A411N2, 
-   A412, A412N, A412N2,
+   A413, A413N, A413N2,
    C434, C434N, C434N2,
    B315, B315D, B315D2, B315N, B315N2,  
    B413, B413D, B413D2, B413N, B413N2,
