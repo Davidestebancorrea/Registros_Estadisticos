@@ -6,13 +6,7 @@ library(lubridate)
 library(janitor)
 library(dplyr)
 library(openxlsx)
-library(xlsx)
-#Puedo crear un proyecto en la carpeta MEGA para incluir todo lo de adentro
 
-
-# Archivos mensuales ------------------------------------------------------
-#___________________Cada mes debo cambiar las variables #fecha_mes y archivo
-#___________________Estas variables sirven a todas las BBDD del Script
 
 meses <- c("01")
 # ("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11","12")
@@ -140,7 +134,6 @@ A07C$"15 años o más" <-A07C$...12+A07C$...13+A07C$...14+A07C$...15+A07C$...16+
   A07C$...30+A07C$...31+A07C$...32+A07C$...33+A07C$...34+A07C$...35+A07C$...36+A07C$...37+A07C$...38+A07C$...39
 A07C <- A07C %>%select(Fecha,REM, Actividad, Profesional, Total, Hombres, Mujeres, `Pueblos Originarios`, Migrantes, '0 a 4 años',
                        '5 a 9 años', '10 a 14 años', '15 años o más')
-
 # A06 ---------------------------------------------------------------------
 A061 <- read_xlsx(archivo, na = " ",col_names = FALSE,
                   range = "A06!A13:AR22") %>% fill(...1)
@@ -197,8 +190,6 @@ colnames(A30M)[19] <- "F19"
 colnames(A30M)[20] <- "F20"
 A30M$"Telemedicina_Hospitalizados" <- A30M$F17+A30M$F18+A30M$F19+A30M$F20
 A30M <- A30M %>% select(Fecha,Especialidad, Telemedicina_Nueva,Telemedicina_Control,Telemedicina_Hospitalizados)
-
-
 
 # A28 ---------------------------------------------------------------------
 A28M <- read_xlsx(archivo, na = " ",col_names = FALSE,
@@ -341,9 +332,7 @@ colnames(A28K)[2] <- "Total"
 A28M <- rbind(A28M, A28K)
 A28M$Fecha <- fecha_mes
 
-
 A28M <- A28M %>% select(Fecha,Seccion, Nombre_Seccion, Variable, Item, Total)
-
 
 # A08 ---------------------------------------------------------------------
 A08M <- read_xlsx(archivo, na = " ",col_names = FALSE,
@@ -412,8 +401,6 @@ colnames(A08M6)[2] <- "Total"
 A08M6$Fecha <- fecha_mes
 A08M6 <- A08M6 %>%select(Fecha, 'Animal mordedor', Total)
 
-
-
 # A09 ---------------------------------------------------------------------
 A09M1 <- read_xlsx(archivo, na = " ",col_names = FALSE,
                    range = "A09!A19:D35")
@@ -439,7 +426,6 @@ colnames(A09M3)[2] <- "TIPO DE INGRESO O EGRESO"
 colnames(A09M3)[4] <- "Total"
 A09M3$Fecha <- fecha_mes
 A09M3 <- A09M3 %>% select(Fecha, ESPECIALIDAD, 'TIPO DE INGRESO O EGRESO', Total)
-
 
 # A19b --------------------------------------------------------------------
 A019bM <- read_xlsx(archivo, na = " ",col_names = FALSE,
@@ -469,8 +455,6 @@ A019bM <- A019bM %>%select(Fecha, `Tipo consulta`, `Tipo atención`, Total, Homb
                            `RECLAMOS RESPONDIDOS FUERA DE PLAZOS LEGALES`,
                            `RECLAMOS PENDIENTES Respuestas pendientes dentro del plazo legal` ,
                            `RECLAMOS PENDIENTES Respuestas pendientes fuera del plazo legal`)
-
-
 
 # A21 ---------------------------------------------------------------------
 #Ocupación
@@ -592,7 +576,7 @@ A213 <- read_excel(A213BBDD)
 A214 <- read_excel(A214BBDD) 
 A041 <- read_excel(A041BBDD)
 A043 <- read_excel(A043BBDD)
-# B_Img <- read_excel(B_IMGBBDD)
+
 
 # junta la informacion con el REM mensual   -------------------------------
 A07 <- rbind(A07, A07M)
@@ -616,7 +600,7 @@ A213 <- rbind(A213, A213M)
 A214 <- rbind(A214, A214M)
 A041 <- rbind(A041, A041M)
 A043 <- rbind(A043, A043M)
-# B_Img <- rbind(B_Img, B_ImgM)
+
 
 # da formato fecha a la variable fecha ------------------------------------
 A07$Fecha=as.Date(A07$Fecha)
@@ -640,7 +624,7 @@ A213$Fecha=as.Date(A213$Fecha)
 A214$Fecha=as.Date(A214$Fecha)
 A041$Fecha=as.Date(A041$Fecha)
 A043$Fecha=as.Date(A043$Fecha)
-# B_Img$Fecha=as.Date(B_Img$Fecha)
+
 
 # Graba las BBDD en el archivo excel --------------------------------------
 openxlsx::write.xlsx(A07, A07BBDD, colNames = TRUE, sheetName = "A07", overwrite = T)
@@ -664,6 +648,6 @@ openxlsx::write.xlsx(A213, A213BBDD, colNames = TRUE, sheetName = "A21_3", overw
 openxlsx::write.xlsx(A214, A214BBDD, colNames = TRUE, sheetName = "A21_4", overwrite = T)
 openxlsx::write.xlsx(A041, A041BBDD, colNames = TRUE, sheetName = "A04_1", overwrite = T)
 openxlsx::write.xlsx(A043, A043BBDD, colNames = TRUE, sheetName = "A04_3", overwrite = T)
-# openxlsx::write.xlsx(B_Img, B_IMGBBDD, colNames = TRUE, sheetName = "B_Img", overwrite = T)
+
 }
 
