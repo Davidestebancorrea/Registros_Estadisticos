@@ -21,6 +21,7 @@ archivo <- paste0(ruta_base,"BBDD Produccion/REM/Serie A/2022/2022-",i," REM ser
 A07BBDD <- paste0(ruta_base,"BBDD Produccion/Ambulatorio/A07 BBDD.xlsx")
 A07CNBBDD <- paste0(ruta_base,"BBDD Produccion/Ambulatorio/A07 BBDD CN.xlsx")
 A30BBDD <- paste0(ruta_base,"BBDD Produccion/Ambulatorio/A30 BBDD.xlsx")
+A32BBDD <- paste0(ruta_base,"BBDD Produccion/Ambulatorio/A32 BBDD.xlsx")
 A28BBDD <- paste0(ruta_base,"BBDD Produccion/Ambulatorio/A28 BBDD.xlsx")
 A08BBDD01 <- paste0(ruta_base,"BBDD Produccion/Urgencia/A08 BBDD_01.xlsx")
 A08BBDD02 <- paste0(ruta_base,"BBDD Produccion/Urgencia/A08 BBDD_02.xlsx")
@@ -40,6 +41,18 @@ A214BBDD <- paste0(ruta_base,"BBDD Produccion/Quirurgico/A21_4 BBDD.xlsx")
 A041BBDD <- paste0(ruta_base,"BBDD Produccion/ADyT/A04_1 BBDD.xlsx")
 A043BBDD <- paste0(ruta_base,"BBDD Produccion/ADyT/A04_3 BBDD.xlsx")
 B_IMGBBDD <- paste0(ruta_base,"BBDD Produccion/ADyT/B_IMG BBDD.xlsx")
+
+
+# A32 ----------------------------------------------------------------------
+A32B <- read_excel(A32BBDD)
+
+A32T <- read_excel(archivo, sheet = "A32", range = "B30", col_names = FALSE)
+A32N <- read_excel(archivo, sheet = "A32", range = "Z30", col_names = FALSE) + read_excel(archivo, sheet = "A32", range = "AE30", col_names = FALSE)
+
+A32 <- data.frame("Fecha"= as.Date(fecha_mes), "Atenciones_Remotas" = A32T[,1], "Atenciones_Remotas_Nuevas" = A32N[,1])
+colnames(A32)[2] <- "Atenciones_Remotas"
+
+A32 <- rbind(A32,A32B)
 
 
 # A07 ---------------------------------------------------------------------
@@ -630,6 +643,7 @@ A043$Fecha=as.Date(A043$Fecha)
 openxlsx::write.xlsx(A07, A07BBDD, colNames = TRUE, sheetName = "A07", overwrite = T)
 openxlsx::write.xlsx(A07CN, A07CNBBDD, colNames = TRUE, sheetName = "A07", overwrite = T)
 openxlsx::write.xlsx(A30, A30BBDD, colNames = TRUE, sheetName = "A30", overwrite = T)
+openxlsx::write.xlsx(A32, A32BBDD, colNames = TRUE, sheetName = "A32", overwrite = T)
 openxlsx::write.xlsx(A28, A28BBDD, colNames = TRUE, sheetName = "A28", overwrite = T)
 openxlsx::write.xlsx(A08, A08BBDD01, colNames = TRUE, sheetName = "A08_1", overwrite = T)
 openxlsx::write.xlsx(A082, A08BBDD02, colNames = TRUE, sheetName = "A08_2", overwrite = T)
