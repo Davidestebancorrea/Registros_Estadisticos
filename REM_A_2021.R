@@ -7,15 +7,15 @@ library(janitor)
 library(dplyr)
 library(openxlsx)
 
-
+anio <- "2022"
 meses <- c("01")
 # ("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11","12")
 for (i in meses) {
-  
- 
-fecha_mes <- paste0("2022-",i,"-01")
+
+
+fecha_mes <- paste0(anio,"-",i,"-01")
 ruta_base <- "C:/Users/control.gestion3/OneDrive/"
-archivo <- paste0(ruta_base,"BBDD Produccion/REM/Serie A/2022/2022-",i," REM serie A.xlsx")
+archivo <- paste0(ruta_base,"BBDD Produccion/REM/Serie A/",anio,"/",anio,"-",i," REM serie A.xlsx")
 
 # Representan las BBDD donde esta guardada la información -----------------
 A07BBDD <- paste0(ruta_base,"BBDD Produccion/Ambulatorio/A07 BBDD.xlsx")
@@ -48,15 +48,17 @@ A32B <- read_excel(A32BBDD)
 
 A32T <- read_excel(archivo, sheet = "A32", range = "B30", col_names = FALSE)
 A32N <- read_excel(archivo, sheet = "A32", range = "Z30", col_names = FALSE) + read_excel(archivo, sheet = "A32", range = "AE30", col_names = FALSE)
+A32A <- read_excel(archivo, sheet = "A32", range = "X45", col_names = FALSE) + read_excel(archivo, sheet = "A32", range = "Y45", col_names = FALSE)
+A32NSP <- read_excel(archivo, sheet = "A32", range = "V45", col_names = FALSE) + read_excel(archivo, sheet = "A32", range = "W45", col_names = FALSE)
 
-A32 <- data.frame("Fecha"= as.Date(fecha_mes), "Atenciones_Remotas" = A32T[,1], "Atenciones_Remotas_Nuevas" = A32N[,1])
+A32 <- data.frame("Fecha"= as.Date(fecha_mes), "Atenciones_Remotas" = A32T[,1], "Atenciones_Remotas_Nuevas" = A32N[,1], "Altas" = A32A[,1], "NSP"= A32NSP[,1])
 colnames(A32)[2] <- "Atenciones_Remotas"
 
 A32 <- rbind(A32,A32B)
 
 
 # A07 ---------------------------------------------------------------------
-A07M <- read_xlsx(archivo, 
+A07M <- read_xlsx(archivo,
                   na = " ",
                   col_names = TRUE,
                   range = "A07!A10:AX70")
@@ -69,9 +71,9 @@ colnames(A07M)[37] <- "IC_Mayor_15"
 colnames(A07M)[38] <- "Alta_Menor_15"
 colnames(A07M)[39] <- "Alta_Mayor_15"
 colnames(A07M)[35] <- "C_Abreviada"
-colnames(A07M)[3] <- "0 a 4 años" 
-colnames(A07M)[4] <- "5 a 9 años" 
-colnames(A07M)[5] <- "10 a 14 años" 
+colnames(A07M)[3] <- "0 a 4 años"
+colnames(A07M)[4] <- "5 a 9 años"
+colnames(A07M)[5] <- "10 a 14 años"
 colnames(A07M)[6] <- "15 a 19 años"
 A07M$"19 años o más" <- A07M$`20 - 24`+A07M$`25 - 29`+A07M$`30 - 34`+A07M$`35 - 39`+A07M$`40 - 44`+A07M$`45 - 49`+
   A07M$`50 - 54`+A07M$`55 - 59`+A07M$`60 - 64`+A07M$`65 - 69`+A07M$`70 - 74`+A07M$`75 - 79`+A07M$`80 y mas`
@@ -116,14 +118,14 @@ A07M$...43 <- NULL
 colnames(A07M)[9] <- "Pertinencia_Protocolo_Referencia"
 colnames(A07M)[10] <- "Pertinencia_Tiempo_Establecido"
 
-#Uso select para indicar que columnas me interesan 
+#Uso select para indicar que columnas me interesan
 A07M <- A07M %>% select(Fecha, Especialidad, Total,  Consulta_Nueva, CN_Origen_APS,CN_Origen_Hospital, CN_Origen_Urgencia,
                         NSP, NSP_Nuevas, NSP_Controles, IC, Alta, Pertinencia_Protocolo_Referencia, Pertinencia_Tiempo_Establecido,
                         Hombres, Mujeres, C_Abreviada, '0 a 4 años', '5 a 9 años', '10 a 14 años', '15 a 19 años', '19 años o más')
 
 
 A07CNM <- A07M %>% select(Fecha, Especialidad, CN_Origen_APS,CN_Origen_Hospital, CN_Origen_Urgencia,
-                        NSP_Nuevas, NSP_Controles, Hombres, Mujeres, 
+                        NSP_Nuevas, NSP_Controles, Hombres, Mujeres,
                         '0 a 4 años', '5 a 9 años', '10 a 14 años', '15 a 19 años', '19 años o más')
 
 # A07 C -----------------------------------------------------------------
@@ -174,13 +176,13 @@ A06M$"10 a 14 años" <- A06M$...10+A06M$...11
 A06M$"15 años o más" <-A06M$...12+A06M$...13+A06M$...14+A06M$...15+A06M$...16+A06M$...17+A06M$...18+A06M$...19+
   A06M$...20+A06M$...21+A06M$...22+A06M$...23+A06M$...24+A06M$...25+A06M$...26+A06M$...27+A06M$...28+A06M$...29+
   A06M$...30+A06M$...31+A06M$...32+A06M$...33+A06M$...34+A06M$...35+A06M$...36+A06M$...37+A06M$...38+A06M$...39
-A06M <- A06M %>%select(Fecha, REM, Actividad, Profesional, Total, Hombres, Mujeres, `Pueblos Originarios`, Migrantes, '0 a 4 años', 
+A06M <- A06M %>%select(Fecha, REM, Actividad, Profesional, Total, Hombres, Mujeres, `Pueblos Originarios`, Migrantes, '0 a 4 años',
                      '5 a 9 años', '10 a 14 años', '15 años o más')
 
 A06M <- rbind(A06M, A07C)
 
 # A30 ---------------------------------------------------------------------
-A30M <- read_xlsx(archivo, 
+A30M <- read_xlsx(archivo,
                   na = " ",
                   col_names = TRUE,
                   range = "A30!A17:AA77")
@@ -215,7 +217,7 @@ colnames(A28M)[1] <- "Item"
 colnames(A28M)[2] <- "Total"
 
 A28K <- read_xlsx(archivo, na = " ",col_names = FALSE,
-                  range = "A28!A194:B198") 
+                  range = "A28!A194:B198")
 A28K <- mutate_all(A28K, ~replace(., is.na(.), 0))
 A28K$Seccion <- "B1"
 A28K$Nombre_Seccion <- "INGRESOS Y EGRESOS  AL PROGRAMA DE REHABILITACIÓN INTEGRAL"
@@ -225,7 +227,7 @@ colnames(A28K)[2] <- "Total"
 A28M <- rbind(A28M, A28K)
 
 A28K <- read_xlsx(archivo, na = " ",col_names = FALSE,
-                  range = "A28!A203:B208") 
+                  range = "A28!A203:B208")
 A28K <- mutate_all(A28K, ~replace(., is.na(.), 0))
 A28K$Seccion <- "B2"
 A28K$Nombre_Seccion <- "Evaluación Inicial"
@@ -235,7 +237,7 @@ colnames(A28K)[2] <- "Total"
 A28M <- rbind(A28M, A28K)
 
 A28K <- read_xlsx(archivo, na = " ",col_names = FALSE,
-                  range = "A28!A212:B216") 
+                  range = "A28!A212:B216")
 A28K <- mutate_all(A28K, ~replace(., is.na(.), 0))
 A28K$Seccion <- "B3"
 A28K$Nombre_Seccion <- "Evaluación Intermedia"
@@ -245,7 +247,7 @@ colnames(A28K)[2] <- "Total"
 A28M <- rbind(A28M, A28K)
 
 A28K <- read_xlsx(archivo, na = " ",col_names = FALSE,
-                  range = "A28!A220:B223") 
+                  range = "A28!A220:B223")
 A28K <- mutate_all(A28K, ~replace(., is.na(.), 0))
 A28K$Seccion <- "B4"
 A28K$Nombre_Seccion <- "Sesiones de Rehabilitación"
@@ -255,7 +257,7 @@ colnames(A28K)[2] <- "Total"
 A28M <- rbind(A28M, A28K)
 
 A28K <- read_xlsx(archivo, na = " ",col_names = FALSE,
-                  range = "A28!A227:B229") 
+                  range = "A28!A227:B229")
 A28K <- mutate_all(A28K, ~replace(., is.na(.), 0))
 A28K$Seccion <- "B5"
 A28K$Nombre_Seccion <- "Derivaciones"
@@ -265,7 +267,7 @@ colnames(A28K)[2] <- "Total"
 A28M <- rbind(A28M, A28K)
 
 A28K <- read_xlsx(archivo, na = " ",col_names = FALSE,
-                  range = "A28!A232:B265") 
+                  range = "A28!A232:B265")
 A28K <- mutate_all(A28K, ~replace(., is.na(.), 0))
 A28K$Seccion <- "B6"
 A28K$Nombre_Seccion <- "Sesiones de Rehabilitación"
@@ -275,7 +277,7 @@ colnames(A28K)[2] <- "Total"
 A28M <- rbind(A28M, A28K)
 
 A28K <- read_xlsx(archivo, na = " ",col_names = FALSE,
-                  range = "A28!A272:B272") 
+                  range = "A28!A272:B272")
 A28K <- mutate_all(A28K, ~replace(., is.na(.), 0))
 A28K$Seccion <- "C1"
 A28K$Nombre_Seccion <- "N° Personas con ayudas técnicas"
@@ -285,7 +287,7 @@ colnames(A28K)[2] <- "Total"
 A28M <- rbind(A28M, A28K)
 
 A28K <- read_xlsx(archivo, na = " ",col_names = FALSE,
-                  range = "A28!A276:B297") 
+                  range = "A28!A276:B297")
 A28K <- mutate_all(A28K, ~replace(., is.na(.), 0))
 A28K$Seccion <- "C2"
 A28K$Nombre_Seccion <- "Ayudas técnicas por tipo"
@@ -295,7 +297,7 @@ colnames(A28K)[2] <- "Total"
 A28M <- rbind(A28M, A28K)
 
 A28K <- read_xlsx(archivo, na = " ",col_names = FALSE,
-                  range = "A28!A301:B323") 
+                  range = "A28!A301:B323")
 A28K <- mutate_all(A28K, ~replace(., is.na(.), 0))
 A28K$Seccion <- "C3"
 A28K$Nombre_Seccion <- "Ayudas técnicas por condición de salud"
@@ -305,7 +307,7 @@ colnames(A28K)[2] <- "Total"
 A28M <- rbind(A28M, A28K)
 
 A28K <- read_xlsx(archivo, na = " ",col_names = FALSE,
-                  range = "A28!B349:C352") 
+                  range = "A28!B349:C352")
 A28K <- mutate_all(A28K, ~replace(., is.na(.), 0))
 A28K$Seccion <- "D2"
 A28K$Nombre_Seccion <- "Evaluación intermedia remota"
@@ -315,7 +317,7 @@ colnames(A28K)[2] <- "Total"
 A28M <- rbind(A28M, A28K)
 
 A28K <- read_xlsx(archivo, na = " ",col_names = FALSE,
-                  range = "A28!B345:C348") 
+                  range = "A28!B345:C348")
 A28K <- mutate_all(A28K, ~replace(., is.na(.), 0))
 A28K$Seccion <- "D2"
 A28K$Nombre_Seccion <- "Evaluación intermedia remota"
@@ -325,7 +327,7 @@ colnames(A28K)[2] <- "Total"
 A28M <- rbind(A28M, A28K)
 
 A28K <- read_xlsx(archivo, na = " ",col_names = FALSE,
-                  range = "A28!B349:C352") 
+                  range = "A28!B349:C352")
 A28K <- mutate_all(A28K, ~replace(., is.na(.), 0))
 A28K$Seccion <- "D2"
 A28K$Nombre_Seccion <- "Sesión de rehabilitación vía remota (telerehabilitación)"
@@ -335,7 +337,7 @@ colnames(A28K)[2] <- "Total"
 A28M <- rbind(A28M, A28K)
 
 A28K <- read_xlsx(archivo, na = " ",col_names = FALSE,
-                  range = "A28!B353:C356") 
+                  range = "A28!B353:C356")
 A28K <- mutate_all(A28K, ~replace(., is.na(.), 0))
 A28K$Seccion <- "D2"
 A28K$Nombre_Seccion <- "Educación remota a usuario y/o cuidador"
@@ -433,7 +435,7 @@ A09M2 <- A09M2 %>%select(Fecha, 'ACTIVIDADES DE ESPECIALIDADES', Total)
 
 A09M3 <- read_xlsx(archivo, na = " ",col_names = FALSE,
                    range = "A09!A221:D306") %>% fill(...1) #el fill lo uso para repetir el valor en las celdas combinadas
-A09M3 <- mutate_all(A09M3, ~replace(., is.na(.), 0)) 
+A09M3 <- mutate_all(A09M3, ~replace(., is.na(.), 0))
 colnames(A09M3)[1] <- "ESPECIALIDAD"
 colnames(A09M3)[2] <- "TIPO DE INGRESO O EGRESO"
 colnames(A09M3)[4] <- "Total"
@@ -462,8 +464,8 @@ colnames(A019bM)[7] <- "RECLAMOS RESPONDIDOS FUERA DE PLAZOS LEGALES"
 colnames(A019bM)[8] <- "RECLAMOS PENDIENTES Respuestas pendientes dentro del plazo legal"
 colnames(A019bM)[9] <- "RECLAMOS PENDIENTES Respuestas pendientes fuera del plazo legal"
 A019bM$Fecha <- fecha_mes
-A019bM <- A019bM %>%select(Fecha, `Tipo consulta`, `Tipo atención`, Total, Hombres, Mujeres, 
-                           `RESPUESTAS DEL MES DENTRO DE PLAZOS LEGALES ( 15 DIAS HÁBILES) Reclamos generados en el mes`, 
+A019bM <- A019bM %>%select(Fecha, `Tipo consulta`, `Tipo atención`, Total, Hombres, Mujeres,
+                           `RESPUESTAS DEL MES DENTRO DE PLAZOS LEGALES ( 15 DIAS HÁBILES) Reclamos generados en el mes`,
                            `RESPUESTAS DEL MES DENTRO DE PLAZOS LEGALES ( 15 DIAS HÁBILES) Reclamos generados en el mes anterior RECLAMOS RESPONDIDOS FUERA DE PLAZOS LEGALES`,
                            `RECLAMOS RESPONDIDOS FUERA DE PLAZOS LEGALES`,
                            `RECLAMOS PENDIENTES Respuestas pendientes dentro del plazo legal` ,
@@ -513,7 +515,7 @@ A213M$'Dias de estada prequirurgicos' <- A213M$...2+A213M$...3
 A213M$'Pacientes Intervenidos' <- A213M$...4+A213M$...5
 A213M$'Pacientes Programados' <- A213M$...6+A213M$...7
 A213M$'Pacientes Suspendidos' <- A213M$...8+A213M$...9
-A213M <- A213M %>%select(Fecha,Especialidad, `Dias de estada prequirurgicos`, 
+A213M <- A213M %>%select(Fecha,Especialidad, `Dias de estada prequirurgicos`,
                          `Pacientes Intervenidos`,`Pacientes Programados`, `Pacientes Suspendidos`)
 #Causas Suspensiones
 A214M <- read_xlsx(archivo, na = " ",col_names = FALSE,
@@ -544,7 +546,7 @@ colnames(A041M)[4] <- "Atención Cerrada"
 colnames(A041M)[5] <- "Servicios Farmaceúticos realizados en establecimientos de Salud"
 colnames(A041M)[6] <- "Servicios Farmaceúticos realizados en Domicilio"
 A041M <- A041M %>%select(Fecha, Servicio_Farmaceutico,Componente,Total,`Atención Abierta`,`Atención Cerrada`,
-                        `Servicios Farmaceúticos realizados en establecimientos de Salud`, 
+                        `Servicios Farmaceúticos realizados en establecimientos de Salud`,
                         `Servicios Farmaceúticos realizados en Domicilio`)
 
 A043M <- read_xlsx(archivo, na = " ",col_names = FALSE,
@@ -586,7 +588,7 @@ A19b <- read_excel(A19bBBDD)
 A211 <- read_excel(A211BBDD)
 A212 <- read_excel(A212BBDD)
 A213 <- read_excel(A213BBDD)
-A214 <- read_excel(A214BBDD) 
+A214 <- read_excel(A214BBDD)
 A041 <- read_excel(A041BBDD)
 A043 <- read_excel(A043BBDD)
 
@@ -637,8 +639,8 @@ A213$Fecha=as.Date(A213$Fecha)
 A214$Fecha=as.Date(A214$Fecha)
 A041$Fecha=as.Date(A041$Fecha)
 A043$Fecha=as.Date(A043$Fecha)
-
-
+#
+#
 # Graba las BBDD en el archivo excel --------------------------------------
 openxlsx::write.xlsx(A07, A07BBDD, colNames = TRUE, sheetName = "A07", overwrite = T)
 openxlsx::write.xlsx(A07CN, A07CNBBDD, colNames = TRUE, sheetName = "A07", overwrite = T)
