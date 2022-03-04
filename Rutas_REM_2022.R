@@ -250,6 +250,25 @@ for (i in meses) {
   }
   else{
     C435D2 <- cbind(C435D2,C435D)}
+  
+  # Meta 7
+  
+  M7N <- read_excel(archivo, sheet = "A09", range = "D310", col_names = FALSE)
+  
+  colnames(M7N)[1] <- fecha_mes
+  if (i == "01"){
+    M7N2 <- M7N}
+  else{
+    M7N2 <- cbind(M7N2,M7N)}
+  
+  M7D <- 
+    read_excel(archivo, sheet = "A09", range = "D309", col_names = FALSE)
+  
+  colnames(M7D)[1] <- fecha_mes
+  if (i == "01"){
+    M7D2 <- M7D}
+  else{
+    M7D2 <- cbind(M7D2,M7D)}
 
 }
 
@@ -307,13 +326,33 @@ C435$indicador <- "C.4.3.5"
 C435$nombre <- "Porcentaje de altas médicas de consulta de especialidad en atención secundaria"
 C435$variable <- c("P1", "P2")
 
+M7 <- rbind(M7N, M7D)
+M7$indicador <- "Meta 7"
+M7$nombre <- "Porcentaje de altas odontologicas de especialidades del nivel secundario por ingreso a tratamiento"
+M7$variable <- c("P1", "P2")
+
 
 rutas_rem_ear <- rbind(A413, B315, B413, B414, B415, C431, C434, C435, D412, D417)
 rutas_rem_ear2 <- rutas_rem_ear %>% select(indicador, nombre, variable)
 rutas_rem_ear <-  round(rutas_rem_ear %>% select(-indicador, -nombre, -variable))
 rutas_rem_ear <- cbind(rutas_rem_ear2, rutas_rem_ear)
 
+# Metas 19664 -------------------------------------------------------------
+rutas_rem_M19 <- rbind(B414, M7, A411, B415)
+rutas_rem_M19 <- rutas_rem_M19 %>% mutate(indicador = case_when(
+  indicador == "B.4.1.4"~ "Meta 4", 
+  indicador == "Meta 7"~ "Meta 7",
+  indicador == "A.4.1.1"~ "Meta 8", 
+  indicador == "B.4.1.5"~ "Meta 9"
+  ))
+rutas_rem_M19_2 <- rutas_rem_M19 %>% select(indicador, nombre, variable)
+rutas_rem_M19 <-  round(rutas_rem_M19 %>% select(-indicador, -nombre, -variable))
+rutas_rem_M19 <- cbind(rutas_rem_M19_2, rutas_rem_M19) 
+
 openxlsx::write.xlsx(rutas_rem_ear, "C:/Users/control.gestion3/OneDrive/BBDD Produccion/Indicadores/Rutas REM/rutas_rem_ear_2022.xlsx", 
+                     colNames = TRUE, sheetName = "rutas", overwrite = TRUE)
+
+openxlsx::write.xlsx(rutas_rem_M19, "C:/Users/control.gestion3/OneDrive/BBDD Produccion/Indicadores/Rutas REM/rutas_rem_M19_2022.xlsx", 
                      colNames = TRUE, sheetName = "rutas", overwrite = TRUE)
 
 rm(A04D, A04N, Denominador, Numerador, rutas_rem_ear, rutas_rem_ear2,
