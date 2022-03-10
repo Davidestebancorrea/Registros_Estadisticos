@@ -6,7 +6,6 @@ library(lubridate)
 library(janitor)
 library(dplyr)
 library(openxlsx)
-library(xlsx)
 #Puedo crear un proyecto en la carpeta MEGA para incluir todo lo de adentro
 
 
@@ -65,6 +64,30 @@ for (i in meses) {
   }
   else{
     B315D2 <- cbind(B315D2,B315D)}
+  
+  
+  #B.3.1.6
+  
+  B316N <- read_excel(archivo, sheet = "A09", range = "D307", col_names = FALSE) +
+    read_excel(archivo, sheet = "A09", range = "D308", col_names = FALSE) +
+    read_excel(archivo, sheet = "A09", range = "D221", col_names = FALSE)*0.45 +
+    read_excel(archivo, sheet = "A09", range = "D222", col_names = FALSE)*0.45
+  
+  colnames(B316N)[1] <- fecha_mes
+  if (i == "01"){
+    B316N2 <- B316N
+  }
+  else{
+    B316N2 <- cbind(B316N2,B316N)}
+  
+  B316D <- as.data.frame(2*36*4*0.85)   
+  
+  colnames(B316D)[1] <- fecha_mes
+  if (i == "01"){
+    B316D2 <- B316D
+  }
+  else{
+    B316D2 <- cbind(B316D2,B316D)}
   
   #B.4.1.3
   B413N <- read_excel(archivo, sheet = "A08", range = "AS12", col_names = FALSE) - 
@@ -283,6 +306,11 @@ B315$indicador <- "B.3.1.5"
 B315$nombre <- "Porcentaje de Horas Ocupadas de Quirófanos Habilitados"
 B315$variable <- c("P1", "P2")
 
+B316 <- rbind(B316N2, B316D2)
+B316$indicador <- "B.3.1.6"
+B316$nombre <- "Indice de Ocupación Dental"
+B316$variable <- c("P1", "P2")
+
 B413 <- rbind(B413N2, B413D2)
 B413$indicador <- "B.4.1.3"
 B413$nombre <- "Porcentaje de Abandono de Pacientes del Proceso de Atención Médica en Unidades de Emergencia Hospitalaria"
@@ -332,7 +360,7 @@ M7$nombre <- "Porcentaje de altas odontologicas de especialidades del nivel secu
 M7$variable <- c("P1", "P2")
 
 
-rutas_rem_ear <- rbind(A413, B315, B413, B414, B415, C431, C434, C435, D412, D417)
+rutas_rem_ear <- rbind(A413, B315, B316, B413, B414, B415, C431, C434, C435, D412, D417)
 rutas_rem_ear2 <- rutas_rem_ear %>% select(indicador, nombre, variable)
 rutas_rem_ear <-  round(rutas_rem_ear %>% select(-indicador, -nombre, -variable))
 rutas_rem_ear <- cbind(rutas_rem_ear2, rutas_rem_ear)
@@ -359,7 +387,8 @@ rm(A04D, A04N, Denominador, Numerador, rutas_rem_ear, rutas_rem_ear2,
    i, archivo, fecha_mes, meses, ruta_base, D412,
    A413, A413N, A413N2,
    C434, C434N, C434N2,
-   B315, B315D, B315D2, B315N, B315N2,  
+   B315, B315D, B315D2, B315N, B315N2,
+   B316, B316D, B316D2, B316N, B316N2,
    B413, B413D, B413D2, B413N, B413N2,
    B414, B414D, B414D2, B414N, B414N2,
    B415, B415D, B415D2, B415N, B415N2,

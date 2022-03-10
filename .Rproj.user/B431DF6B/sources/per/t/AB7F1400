@@ -3,7 +3,7 @@
     "path": "~/GitHub/Registros_Estadisticos/Rutas_REM_2022.R",
     "project_path": "Rutas_REM_2022.R",
     "type": "r_source",
-    "hash": "956157590",
+    "hash": "1579937426",
     "contents": "",
     "dirty": false,
     "created": 1646402480753.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "2,0",
+        "cursorPosition": "7,17",
         "scrollLine": "0"
     },
     "folds": "",
-    "lastKnownWriteTime": 1646403300,
+    "lastKnownWriteTime": 1646914051,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1646403300168,
+    "last_content_update": 1646914051149,
     "read_only": false,
     "read_only_alternatives": []
 }
